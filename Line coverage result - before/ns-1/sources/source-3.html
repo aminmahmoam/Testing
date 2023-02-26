@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ExampleTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">edu.ncsu.csc326.coffeemaker</a>
+</div>
+
+<h1>Coverage Summary for Class: ExampleTest (edu.ncsu.csc326.coffeemaker)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ExampleTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95,1%
+  </span>
+  <span class="absValue">
+    (39/41)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package edu.ncsu.csc326.coffeemaker;
+&nbsp;
+&nbsp;import static org.junit.Assert.assertEquals;
+&nbsp;import static org.junit.Assert.assertThrows;
+&nbsp;import static org.junit.Assert.fail;
+&nbsp;
+&nbsp;import org.junit.Before;
+&nbsp;import org.junit.Test;
+&nbsp;
+&nbsp;import edu.ncsu.csc326.coffeemaker.exceptions.InventoryException;
+&nbsp;
+&nbsp;/**
+&nbsp; *
+&nbsp; * Example Unit tests for CoffeeMaker class.
+&nbsp; * Do not submit as your own!
+&nbsp; */
+<b class="fc">&nbsp;public class ExampleTest {</b>
+&nbsp;	
+&nbsp;	private CoffeeMaker cm;
+&nbsp;	private Recipe r1;
+&nbsp;	private Recipe r2;
+&nbsp;	private Recipe r3;
+&nbsp;	private Recipe r4;
+&nbsp;
+&nbsp;	@Before
+&nbsp;	public void setUp() throws Exception {
+<b class="fc">&nbsp;		cm = new CoffeeMaker();</b>
+&nbsp;		
+&nbsp;		//Set up for r1
+<b class="fc">&nbsp;		r1 = new Recipe();</b>
+<b class="fc">&nbsp;		r1.setName(&quot;Coffee&quot;);</b>
+<b class="fc">&nbsp;		r1.setAmtChocolate(&quot;0&quot;);</b>
+<b class="fc">&nbsp;		r1.setAmtCoffee(&quot;3&quot;);</b>
+<b class="fc">&nbsp;		r1.setAmtMilk(&quot;1&quot;);</b>
+<b class="fc">&nbsp;		r1.setAmtSugar(&quot;1&quot;);</b>
+<b class="fc">&nbsp;		r1.setPrice(&quot;50&quot;);</b>
+&nbsp;		
+&nbsp;		//Set up for r2
+<b class="fc">&nbsp;		r2 = new Recipe();</b>
+<b class="fc">&nbsp;		r2.setName(&quot;Mocha&quot;);</b>
+<b class="fc">&nbsp;		r2.setAmtChocolate(&quot;20&quot;);</b>
+<b class="fc">&nbsp;		r2.setAmtCoffee(&quot;3&quot;);</b>
+<b class="fc">&nbsp;		r2.setAmtMilk(&quot;1&quot;);</b>
+<b class="fc">&nbsp;		r2.setAmtSugar(&quot;1&quot;);</b>
+<b class="fc">&nbsp;		r2.setPrice(&quot;75&quot;);</b>
+&nbsp;		
+&nbsp;		//Set up for r3
+<b class="fc">&nbsp;		r3 = new Recipe();</b>
+<b class="fc">&nbsp;		r3.setName(&quot;Latte&quot;);</b>
+<b class="fc">&nbsp;		r3.setAmtChocolate(&quot;0&quot;);</b>
+<b class="fc">&nbsp;		r3.setAmtCoffee(&quot;3&quot;);</b>
+<b class="fc">&nbsp;		r3.setAmtMilk(&quot;3&quot;);</b>
+<b class="fc">&nbsp;		r3.setAmtSugar(&quot;1&quot;);</b>
+<b class="fc">&nbsp;		r3.setPrice(&quot;100&quot;);</b>
+&nbsp;		
+&nbsp;		//Set up for r4
+<b class="fc">&nbsp;		r4 = new Recipe();</b>
+<b class="fc">&nbsp;		r4.setName(&quot;Hot Chocolate&quot;);</b>
+<b class="fc">&nbsp;		r4.setAmtChocolate(&quot;4&quot;);</b>
+<b class="fc">&nbsp;		r4.setAmtCoffee(&quot;0&quot;);</b>
+<b class="fc">&nbsp;		r4.setAmtMilk(&quot;1&quot;);</b>
+<b class="fc">&nbsp;		r4.setAmtSugar(&quot;1&quot;);</b>
+<b class="fc">&nbsp;		r4.setPrice(&quot;65&quot;);</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	@Test
+&nbsp;	public void testAddInventory_Normal() {
+&nbsp;		try {
+<b class="fc">&nbsp;			cm.addInventory(&quot;4&quot;,&quot;7&quot;,&quot;0&quot;,&quot;9&quot;); //Coffee, Milk, Sugar, Chocolate</b>
+<b class="nc">&nbsp;		} catch (InventoryException e) {</b>
+<b class="nc">&nbsp;			fail(&quot;InventoryException should not be thrown&quot;);</b>
+<b class="fc">&nbsp;		}</b>
+<b class="fc">&nbsp;		String inventory = cm.checkInventory();</b>
+<b class="fc">&nbsp;		String expected = &quot;Coffee: 19\nMilk: 22\nSugar: 15\nChocolate: 24\n&quot;;</b>
+&nbsp;		// We start with 15 in inventory, then added some.
+<b class="fc">&nbsp;		assertEquals(expected,inventory);</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	@Test
+&nbsp;	public void testAddInventoryException() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				InventoryException.class, () -&gt; {
+<b class="fc">&nbsp;					cm.addInventory(&quot;4&quot;, &quot;-1&quot;, &quot;asdf&quot;, &quot;3&quot;); // Should throw an InventoryException</b>
+&nbsp;				}
+&nbsp;				);
+&nbsp;	}
+&nbsp;	
+&nbsp;	@Test
+&nbsp;	public void testMakeCoffee_Normal() {
+<b class="fc">&nbsp;		cm.addRecipe(r1);</b>
+<b class="fc">&nbsp;		assertEquals(25, cm.makeCoffee(0, 75));</b>
+&nbsp;	}
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-24 13:57</div>
+</div>
+</body>
+</html>

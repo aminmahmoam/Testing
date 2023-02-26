@@ -1,0 +1,274 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > InventoryTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">edu.ncsu.csc326.coffeemaker</a>
+</div>
+
+<h1>Coverage Summary for Class: InventoryTest (edu.ncsu.csc326.coffeemaker)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">InventoryTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (21/21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92,3%
+  </span>
+  <span class="absValue">
+    (60/65)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package edu.ncsu.csc326.coffeemaker;
+&nbsp;import static org.junit.Assert.assertArrayEquals;
+&nbsp;import static org.junit.Assert.assertEquals;
+&nbsp;import static org.junit.Assert.assertThrows;
+&nbsp;import static org.junit.Assert.fail;
+&nbsp;
+&nbsp;import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
+&nbsp;import org.junit.Before;
+&nbsp;import org.junit.Test;
+&nbsp;
+&nbsp;import edu.ncsu.csc326.coffeemaker.exceptions.InventoryException;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;public class InventoryTest {</b>
+&nbsp;	Inventory inventory;
+&nbsp;	Recipe recipe;
+&nbsp;	
+&nbsp;	@Before
+&nbsp;	public void setup() throws Exception 
+&nbsp;	{
+<b class="fc">&nbsp;		inventory = new Inventory();</b>
+<b class="fc">&nbsp;		recipe = new Recipe();</b>
+<b class="fc">&nbsp;		inventory.setChocolate(2);</b>
+<b class="fc">&nbsp;		inventory.setCoffee(10);</b>
+<b class="fc">&nbsp;		inventory.setMilk(50);</b>
+<b class="fc">&nbsp;		inventory.setSugar(1);</b>
+&nbsp;		
+<b class="fc">&nbsp;		recipe.setName(&quot;R1&quot;);</b>
+<b class="fc">&nbsp;	    recipe.setPrice(&quot;12&quot;);</b>
+<b class="fc">&nbsp;		recipe.setAmtChocolate(&quot;5&quot;);</b>
+<b class="fc">&nbsp;		recipe.setAmtCoffee(&quot;10&quot;);</b>
+<b class="fc">&nbsp;		recipe.setAmtMilk(&quot;6&quot;);</b>
+<b class="fc">&nbsp;		recipe.setAmtSugar(&quot;2&quot;);</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	
+&nbsp;	// The addChocolate function throws exception for negative integers so we test that here
+&nbsp;	@Test
+&nbsp;	public void testAddChocolateException() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				InventoryException.class, () -&gt; {
+<b class="fc">&nbsp;					String s = &quot;-2&quot;;</b>
+<b class="fc">&nbsp;					inventory.addChocolate(s);  // Should throw an InventoryException</b>
+&nbsp;				}
+&nbsp;				);
+<b class="fc">&nbsp;		assertEquals(&quot;Units of chocolate must be a positive integer&quot;, exception.getMessage());</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	
+&nbsp;	@Test
+&nbsp;	public void testAddCoffeeException() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				InventoryException.class, () -&gt; {
+<b class="fc">&nbsp;					String s = &quot;-12&quot;;</b>
+<b class="fc">&nbsp;					inventory.addCoffee(s);  // Should throw an InventoryException</b>
+&nbsp;				}
+&nbsp;				);
+<b class="fc">&nbsp;		assertEquals(&quot;Units of coffee must be a positive integer&quot;, exception.getMessage());</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	@Test
+&nbsp;	public void testAddMilkException() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				InventoryException.class, () -&gt; {
+<b class="fc">&nbsp;					String s = &quot;-12&quot;;</b>
+<b class="fc">&nbsp;					inventory.addMilk(s);  // Should throw an InventoryException</b>
+&nbsp;				}
+&nbsp;				);
+<b class="fc">&nbsp;		assertEquals(&quot;Units of milk must be a positive integer&quot;, exception.getMessage());</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	// The test fails because line 182 in Inventory class is wrong
+&nbsp;	@Test
+&nbsp;	public void testAddSugarException() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				InventoryException.class, () -&gt; {
+<b class="fc">&nbsp;					String s = Integer.toString(-12);</b>
+<b class="fc">&nbsp;					inventory.addSugar(s);  // Should throw an InventoryException</b>
+&nbsp;				}
+&nbsp;				);
+<b class="nc">&nbsp;		assertEquals(&quot;Units of sugar must be a positive integer&quot;, exception.getMessage());</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testAddSugarException1() {
+<b class="fc">&nbsp;		String sugarAmt = &quot;-12&quot;;</b>
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				InventoryException.class, () -&gt; {
+<b class="fc">&nbsp;					inventory.addSugar(sugarAmt);  // Should throw an InventoryException</b>
+&nbsp;				}
+&nbsp;		);
+<b class="nc">&nbsp;		assertEquals(&quot;Units of sugar must be a positive integer&quot;, exception.getMessage());</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testAddSugarException2() {
+<b class="fc">&nbsp;		String sugarAmt = &quot;abc&quot;;</b>
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				InventoryException.class, () -&gt; {
+<b class="fc">&nbsp;					inventory.addSugar(sugarAmt);  // Should throw an InventoryException</b>
+&nbsp;				}
+&nbsp;		);
+<b class="fc">&nbsp;		assertEquals(&quot;Units of sugar must be a positive integer&quot;, exception.getMessage());</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testAddSugarException3() {
+<b class="fc">&nbsp;		String sugarAmt = &quot;12&quot;;</b>
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				InventoryException.class, () -&gt; {
+<b class="fc">&nbsp;					inventory.addSugar(sugarAmt);  // Should throw an InventoryException</b>
+&nbsp;				}
+&nbsp;		);
+<b class="fc">&nbsp;		assertEquals(&quot;Units of sugar must be a positive integer&quot;, exception.getMessage());</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	@Test
+&nbsp;	public void testEnoughIngredients()
+&nbsp;	   
+&nbsp;	{   // There are not enough ingredients for this recipe so we expect to get a false and the 
+&nbsp;		// recipe is not added
+<b class="fc">&nbsp;		boolean added = inventory.enoughIngredients(recipe);</b>
+&nbsp;		// Since the name of the recipe that was deleted is &quot;R1&quot; we expect to get R1
+<b class="fc">&nbsp;		boolean expected = false;</b>
+<b class="fc">&nbsp;		assertEquals(expected,added);</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	@Test
+&nbsp;	public void testUseIngredients()
+&nbsp;	   
+&nbsp;	{   // The recipe could not be added because there was not enough ingredients
+<b class="fc">&nbsp;		boolean result = inventory.useIngredients(recipe);</b>
+&nbsp;		// We expect to get a false since no ingredient is used
+<b class="fc">&nbsp;		boolean expected = false;</b>
+<b class="fc">&nbsp;		assertEquals(expected,result);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testFDataChochlateAdd() {
+<b class="fc">&nbsp;		String result = &quot;&quot;;</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			inventory.addChocolate(&quot;abc&quot;);</b>
+<b class="fc">&nbsp;		} catch (InventoryException e) {</b>
+<b class="fc">&nbsp;			result = e.getMessage();</b>
+<b class="nc">&nbsp;		}</b>
+<b class="fc">&nbsp;		assertEquals(&quot;Units of chocolate must be a positive integer&quot;, result);</b>
+&nbsp;	}
+&nbsp;	@Test
+&nbsp;	public void testFDataCoffeeAdd() {
+<b class="fc">&nbsp;		String result = &quot;&quot;;</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			inventory.addCoffee(&quot;abc&quot;);</b>
+<b class="fc">&nbsp;		} catch (InventoryException e) {</b>
+<b class="fc">&nbsp;			result = e.getMessage();</b>
+<b class="nc">&nbsp;		}</b>
+<b class="fc">&nbsp;		assertEquals(&quot;Units of coffee must be a positive integer&quot;, result);</b>
+&nbsp;	}
+&nbsp;	@Test
+&nbsp;	public void testFDataMilkAdd() {
+<b class="fc">&nbsp;		String result = &quot;&quot;;</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			inventory.addMilk(&quot;abc&quot;);</b>
+<b class="fc">&nbsp;		} catch (InventoryException e) {</b>
+<b class="fc">&nbsp;			result = e.getMessage();</b>
+<b class="nc">&nbsp;		}</b>
+<b class="fc">&nbsp;		assertEquals(&quot;Units of milk must be a positive integer&quot;, result);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-25 11:33</div>
+</div>
+</body>
+</html>

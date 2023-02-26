@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CoffeeMakerTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">book Coverage Results</a> &gt; <a href="index.source.html" class="el_package">edu.ncsu.csc326.coffeemaker</a> &gt; <span class="el_source">CoffeeMakerTest.java</span></div><h1>CoffeeMakerTest.java</h1><pre class="source lang-java linenums">package edu.ncsu.csc326.coffeemaker;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
+import edu.ncsu.csc326.coffeemaker.exceptions.InventoryException;
+import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
+
+
+<span class="nc" id="L12">public class CoffeeMakerTest {</span>
+	 CoffeeMaker coffeeMaker;
+	 Recipe recipe;
+	 Inventory inventory;
+	 RecipeBook recipeBook;
+	 
+	 @Before
+	 public void setUp() throws Exception 
+	 {
+<span class="nc" id="L21">		 coffeeMaker = new CoffeeMaker();</span>
+<span class="nc" id="L22">		 recipe = new Recipe();</span>
+<span class="nc" id="L23">		 inventory = new Inventory();</span>
+<span class="nc" id="L24">		 recipeBook = new RecipeBook();</span>
+<span class="nc" id="L25">		 recipe.setName(&quot;R1&quot;);</span>
+<span class="nc" id="L26">		 recipe.setPrice(&quot;12&quot;);</span>
+<span class="nc" id="L27">	     recipe.setAmtChocolate(&quot;5&quot;);</span>
+<span class="nc" id="L28">		 recipe.setAmtCoffee(&quot;10&quot;);</span>
+<span class="nc" id="L29">		 recipe.setAmtMilk(&quot;6&quot;);</span>
+<span class="nc" id="L30">		 recipe.setAmtSugar(&quot;2&quot;);</span>
+		 
+<span class="nc" id="L32">	 }</span>
+	 
+	 // This test fails because the add recipe method does not check if the recipe is null
+	// If the recipe is null, it should not be added to the array of recipes
+	 /*@Test
+	 public void testAddrecipe()
+	 {
+		 Recipe recipe1= null;
+		 boolean added = coffeeMaker.addRecipe(recipe1);
+		 boolean expected = false;
+		 assertEquals(expected, added);
+	 }
+	 
+	 // It passes because the deletRecipe in the recipeBook class checks if any recipe exist in that index
+	 @Test
+	 public void testDeleteRecipe1()
+	 {
+		 String deleted= coffeeMaker.deleteRecipe(0);
+		 String expected = null;
+		 assertEquals(expected,deleted);
+	 }
+	 
+	 // The test passes
+	 @Test
+	 public void testDeleteRecipe2()
+	 {   coffeeMaker.addRecipe(recipe);
+		 String deleted= coffeeMaker.deleteRecipe(0);
+		 String expected = &quot;R1&quot;;
+		 assertEquals(expected,deleted);
+	 }
+	 
+	 // I don't know why I get error here
+	 // addSugar method does not work properly because of line 182 in the Inventory class
+	 // But what is the problem with chocolate?
+	 @Test
+	 public void testAddInvnetory() 
+	 {
+		 try 
+		 {  
+			 coffeeMaker.addInventory(&quot;2&quot;, &quot;12&quot;, &quot;3&quot;, &quot;6&quot;);
+		 }
+		 catch(InventoryException e) 
+		 {
+			// fail(&quot;InventoryException should not be thrown&quot;);
+		 }
+		 
+		 String inventoryCheck = coffeeMaker.checkInventory();
+		 String expected = &quot;Coffee: 17\nMilk: 27\nSugar: 18\nChocolate: 21\n&quot;;
+		 assertEquals(expected,inventoryCheck);
+		 
+	 }
+	 */
+	 // Test if we get the subtraction of paid money and the price of the recipe
+	 // Here the recipe can be made because all the ingredients are enough
+	@Test
+	public void testMakeCoffee1()
+	
+<span class="nc" id="L89">	{   coffeeMaker.addRecipe(recipe);</span>
+<span class="nc" id="L90">		int paidAmount = 24;</span>
+		try {
+<span class="nc" id="L92">			coffeeMaker.addInventory(&quot;15&quot;, &quot;15&quot;, &quot;15&quot;, &quot;15&quot;);</span>
+<span class="nc" id="L93">		} catch (InventoryException e) {</span>
+<span class="nc" id="L94">			e.getMessage();</span>
+<span class="nc" id="L95">		}</span>
+<span class="nc" id="L96">		int expected = 24-12;</span>
+<span class="nc" id="L97">		int result = coffeeMaker.makeCoffee(0, paidAmount);</span>
+<span class="nc" id="L98">		assertEquals(expected, result);</span>
+<span class="nc" id="L99">	}</span>
+	 
+	// Here the expected return value is 6 since the paid money is not enough and the transaction does not take place
+	@Test
+	public void testMakeCoffee2()
+	
+<span class="nc" id="L105">	{   coffeeMaker.addRecipe(recipe);</span>
+<span class="nc" id="L106">		int paidAmount = 6;</span>
+		try {
+<span class="nc" id="L108">			coffeeMaker.addInventory(&quot;15&quot;, &quot;15&quot;, &quot;15&quot;, &quot;15&quot;);</span>
+<span class="nc" id="L109">		} catch (InventoryException e) {</span>
+<span class="nc" id="L110">			e.getMessage();</span>
+<span class="nc" id="L111">		}</span>
+<span class="nc" id="L112">		int expected = 6;</span>
+<span class="nc" id="L113">		int result = coffeeMaker.makeCoffee(0, paidAmount);</span>
+<span class="nc" id="L114">		assertEquals(expected, result);</span>
+<span class="nc" id="L115">	}</span>
+	
+	// Here the ingredients are not enough so the recipe can not be made
+	@Test
+    public void testMakeCoffee3()
+<span class="nc" id="L120">	{   coffeeMaker.addRecipe(recipe);</span>
+<span class="nc" id="L121">		int paidAmount = 6;</span>
+		try {
+<span class="nc" id="L123">			coffeeMaker.addInventory(&quot;2&quot;, &quot;15&quot;, &quot;4&quot;, &quot;1&quot;);</span>
+<span class="nc" id="L124">		} catch (InventoryException e) {</span>
+<span class="nc" id="L125">			e.getMessage();</span>
+<span class="nc" id="L126">		}</span>
+<span class="nc" id="L127">		int expected = 6;</span>
+<span class="nc" id="L128">		int result = coffeeMaker.makeCoffee(0, paidAmount);</span>
+<span class="nc" id="L129">		assertEquals(expected, result);</span>
+<span class="nc" id="L130">	}</span>
+
+	@Test
+	public void testMakeCoffee5()
+	{
+
+<span class="nc" id="L136">		int paidAmount = 6;</span>
+		try {
+<span class="nc" id="L138">			coffeeMaker.addRecipe(recipe);</span>
+<span class="nc" id="L139">			coffeeMaker.getRecipes()[0] = null;</span>
+<span class="nc" id="L140">			coffeeMaker.addInventory(&quot;2&quot;, &quot;15&quot;, &quot;4&quot;, &quot;1&quot;);</span>
+<span class="nc" id="L141">		} catch (InventoryException e) {</span>
+<span class="nc" id="L142">			e.getMessage();</span>
+<span class="nc" id="L143">		}</span>
+<span class="nc" id="L144">		int expected = 6;</span>
+<span class="nc" id="L145">		int result = coffeeMaker.makeCoffee(0, paidAmount);</span>
+<span class="nc" id="L146">		assertEquals(expected, result);</span>
+<span class="nc" id="L147">	}</span>
+
+	@Test
+	public void testMakeCoffee6()
+	{
+
+<span class="nc" id="L153">		int paidAmount = 6;</span>
+		try {
+<span class="nc" id="L155">			inventory.setCoffee(0);</span>
+<span class="nc" id="L156">			inventory.setChocolate(0);</span>
+<span class="nc" id="L157">			inventory.setMilk(0);</span>
+<span class="nc" id="L158">			inventory.setSugar(0);</span>
+<span class="nc" id="L159">			recipe.setAmtMilk(&quot;10&quot;);</span>
+<span class="nc" id="L160">			recipe.setPrice(&quot;2&quot;);</span>
+<span class="nc" id="L161">			coffeeMaker.addRecipe(recipe);</span>
+		}
+<span class="nc" id="L163">		catch (RecipeException e) {</span>
+<span class="nc" id="L164">			e.getMessage();</span>
+<span class="nc" id="L165">		}</span>
+<span class="nc" id="L166">		int expected = 6;</span>
+<span class="nc" id="L167">		int result = coffeeMaker.makeCoffee(0, paidAmount);</span>
+<span class="nc" id="L168">		assertEquals(expected, result);</span>
+<span class="nc" id="L169">	}</span>
+
+	@Test
+	public void testMakeCoffee4() {
+<span class="nc" id="L173">		Throwable exception = assertThrows(</span>
+				NullPointerException.class, () -&gt; {
+<span class="nc" id="L175">					int paidAmount = 6;</span>
+					try {
+<span class="nc" id="L177">						recipe = null;</span>
+<span class="nc" id="L178">						coffeeMaker.addRecipe(recipe);</span>
+<span class="nc" id="L179">						coffeeMaker.addInventory(&quot;2&quot;, &quot;15&quot;, &quot;4&quot;, &quot;1&quot;);</span>
+<span class="nc" id="L180">					} catch (InventoryException e) {</span>
+<span class="nc" id="L181">						e.getMessage();</span>
+<span class="nc" id="L182">					}</span>
+
+<span class="nc" id="L184">					coffeeMaker.makeCoffee(10, paidAmount);</span>
+<span class="nc" id="L185">				}</span>
+		);
+<span class="nc" id="L187">		assertEquals(&quot;Cannot invoke \&quot;edu.ncsu.csc326.coffeemaker.Recipe.equals(Object)\&quot; because \&quot;r\&quot; is null&quot;, exception.getMessage());</span>
+<span class="nc" id="L188">	}</span>
+
+	// This test fails because the method does not check for negative arguments
+	 @Test
+	public void testNegativeArgumentsForMakeCoffee1() {
+<span class="nc" id="L193">		Throwable exception = assertThrows(</span>
+				IllegalArgumentException.class, () -&gt; {
+<span class="nc" id="L195">					coffeeMaker.addRecipe(recipe);</span>
+<span class="nc" id="L196">					int paidAmount = -12;</span>
+					try {
+<span class="nc" id="L198">						coffeeMaker.addInventory(&quot;2&quot;, &quot;15&quot;, &quot;4&quot;, &quot;1&quot;);</span>
+<span class="nc" id="L199">					} catch (InventoryException e) {</span>
+<span class="nc" id="L200">						e.getMessage();</span>
+<span class="nc" id="L201">					}</span>
+<span class="nc" id="L202">					coffeeMaker.makeCoffee(0, paidAmount);</span>
+<span class="nc" id="L203">				    }</span>
+				);
+<span class="nc" id="L205">		assertEquals(&quot;The passed argument as the paid price should be positive integer&quot;, exception.getMessage());</span>
+<span class="nc" id="L206">    }</span>
+	 
+    // This test passes
+	 @Test
+	 public void testNegativeArgumentsForMakeCoffee2() {
+<span class="nc" id="L211">			Throwable exception = assertThrows(</span>
+					IndexOutOfBoundsException.class, () -&gt; {
+<span class="nc" id="L213">						coffeeMaker.addRecipe(recipe);</span>
+<span class="nc" id="L214">						int paidAmount = 12;</span>
+						try {
+<span class="nc" id="L216">							coffeeMaker.addInventory(&quot;2&quot;, &quot;15&quot;, &quot;4&quot;, &quot;1&quot;);</span>
+<span class="nc" id="L217">						} catch (InventoryException e) {</span>
+<span class="nc" id="L218">							e.getMessage();</span>
+<span class="nc" id="L219">						}</span>
+<span class="nc" id="L220">						coffeeMaker.makeCoffee(-4, paidAmount);</span>
+<span class="nc" id="L221">					    }</span>
+					);
+<span class="nc" id="L223">			assertEquals(&quot;Index -4 out of bounds for length 4&quot;, exception.getMessage());</span>
+<span class="nc" id="L224">	    }</span>
+
+	 
+	 
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

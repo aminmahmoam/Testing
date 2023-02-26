@@ -1,0 +1,247 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > RecipeBookTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">edu.ncsu.csc326.coffeemaker</a>
+</div>
+
+<h1>Coverage Summary for Class: RecipeBookTest (edu.ncsu.csc326.coffeemaker)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RecipeBookTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (56/56)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package edu.ncsu.csc326.coffeemaker;
+&nbsp;import static org.junit.Assert.assertArrayEquals;
+&nbsp;import static org.junit.Assert.assertEquals;
+&nbsp;import static org.junit.Assert.assertThrows;
+&nbsp;import static org.junit.Assert.fail;
+&nbsp;
+&nbsp;import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
+&nbsp;import org.junit.Before;
+&nbsp;import org.junit.Test;
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;public class RecipeBookTest {</b>
+&nbsp;	RecipeBook recipeBook;
+&nbsp;	Recipe newRecipe;
+&nbsp;	Recipe oldRecipe;
+&nbsp;	int newRecipeIndex;
+&nbsp;	
+&nbsp;	
+&nbsp;	@Before
+&nbsp;	public void setup() throws Exception
+&nbsp;	{
+<b class="fc">&nbsp;		recipeBook= new RecipeBook();</b>
+<b class="fc">&nbsp;		newRecipe = new Recipe();</b>
+<b class="fc">&nbsp;		newRecipe.setName(&quot;R1&quot;);</b>
+<b class="fc">&nbsp;		newRecipe.setPrice(&quot;12&quot;);</b>
+<b class="fc">&nbsp;		newRecipe.setAmtChocolate(&quot;5&quot;);</b>
+<b class="fc">&nbsp;		newRecipe.setAmtCoffee(&quot;10&quot;);</b>
+<b class="fc">&nbsp;		newRecipe.setAmtMilk(&quot;6&quot;);</b>
+<b class="fc">&nbsp;		newRecipe.setAmtSugar(&quot;2&quot;);</b>
+&nbsp;		
+<b class="fc">&nbsp;		oldRecipe = new Recipe();</b>
+<b class="fc">&nbsp;		oldRecipe.setName(&quot;R0&quot;);</b>
+<b class="fc">&nbsp;		oldRecipe.setPrice(&quot;12&quot;);</b>
+<b class="fc">&nbsp;		oldRecipe.setAmtChocolate(&quot;10&quot;);</b>
+<b class="fc">&nbsp;		oldRecipe.setAmtCoffee(&quot;8&quot;);</b>
+<b class="fc">&nbsp;		oldRecipe.setAmtMilk(&quot;2&quot;);</b>
+<b class="fc">&nbsp;		oldRecipe.setAmtSugar(&quot;5&quot;);</b>
+&nbsp;		
+&nbsp;	}
+&nbsp;    // I don&#39;t know why the test passes! The editRecipe does not throw any exceptions
+&nbsp;	@Test
+&nbsp;	public void testEditRecipeException() 
+&nbsp;	{
+<b class="fc">&nbsp;		Throwable exception =</b>
+<b class="fc">&nbsp;		assertThrows(</b>
+&nbsp;		IndexOutOfBoundsException.class,
+<b class="fc">&nbsp;		() -&gt; { recipeBook.editRecipe(-4, oldRecipe);</b>
+&nbsp;				}
+&nbsp;		);
+&nbsp;	}
+&nbsp;	
+&nbsp;	@Test
+&nbsp;	public void testAddRecipe()
+&nbsp;	{   // Here we try to add a recipe that has already been added to the recipeBook
+&nbsp;		// The addRecipe function should return false which means the repeated recipe can not be added
+<b class="fc">&nbsp;	    recipeBook.addRecipe(newRecipe);</b>
+<b class="fc">&nbsp;	    Boolean canBeAdded = recipeBook.addRecipe(newRecipe);</b>
+<b class="fc">&nbsp;        Boolean expected = false;</b>
+<b class="fc">&nbsp;		assertEquals(expected,canBeAdded);</b>
+&nbsp;		
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testAddRecipe1()
+&nbsp;	{
+<b class="fc">&nbsp;		Boolean canBeAdded = false;</b>
+&nbsp;
+<b class="fc">&nbsp;		Recipe recipe1 = new Recipe();</b>
+<b class="fc">&nbsp;		recipe1.setName(&quot;1&quot;);</b>
+<b class="fc">&nbsp;		Recipe recipe2 = new Recipe();</b>
+<b class="fc">&nbsp;		recipe2.setName(&quot;2&quot;);</b>
+<b class="fc">&nbsp;		Recipe recipe3 = new Recipe();</b>
+<b class="fc">&nbsp;		recipe3.setName(&quot;3&quot;);</b>
+<b class="fc">&nbsp;		Recipe recipe4 = new Recipe();</b>
+<b class="fc">&nbsp;		recipe4.setName(&quot;4&quot;);</b>
+<b class="fc">&nbsp;		recipeBook.addRecipe(recipe1);</b>
+<b class="fc">&nbsp;		recipeBook.addRecipe(recipe2);</b>
+<b class="fc">&nbsp;		recipeBook.addRecipe(recipe3);</b>
+<b class="fc">&nbsp;		recipeBook.addRecipe(recipe4);</b>
+<b class="fc">&nbsp;		canBeAdded = recipeBook.addRecipe(newRecipe);</b>
+&nbsp;
+<b class="fc">&nbsp;		Boolean expected = false;</b>
+<b class="fc">&nbsp;		assertEquals(expected,canBeAdded);</b>
+&nbsp;
+&nbsp;	}
+&nbsp;
+&nbsp;	// Try to edit oldRecipe with the newRcecipe
+&nbsp;	@Test
+&nbsp;	public void testEditRecipe1()
+&nbsp;	 
+&nbsp;	{   
+<b class="fc">&nbsp;		recipeBook.addRecipe(oldRecipe);</b>
+&nbsp;		// The name of edited recipe (OldRecipe) should be returned so we expect R0
+<b class="fc">&nbsp;		String recipeName =recipeBook.editRecipe(0, newRecipe);</b>
+<b class="fc">&nbsp;		String expected = &quot;R0&quot;;</b>
+<b class="fc">&nbsp;		assertEquals(expected,recipeName);</b>
+&nbsp;		
+&nbsp;	}
+&nbsp;	@Test
+&nbsp;	public void testEditRecipe2()
+&nbsp;	 
+&nbsp;	{   // No recipe has been added to the recipe book so no recipe can be found at index  0
+<b class="fc">&nbsp;		String recipeName =recipeBook.editRecipe(0, newRecipe);</b>
+&nbsp;		// Since the recipe can not be found we expect the editRecipe function to return null
+<b class="fc">&nbsp;		String expected = null;</b>
+<b class="fc">&nbsp;		assertEquals(expected,recipeName);</b>
+&nbsp;		
+&nbsp;	}
+&nbsp;	@Test
+&nbsp;	public void testDeletRecipe1()
+&nbsp;	 
+&nbsp;	{   // No recipe has been added to the recipe book so no recipe can be found at index  0 to be deleted
+<b class="fc">&nbsp;		String recipeName =recipeBook.deleteRecipe(0);</b>
+&nbsp;		// Since the recipe can not be found  to delete we expect the deleteRecipe function to return null
+<b class="fc">&nbsp;		String expected = null;</b>
+<b class="fc">&nbsp;		assertEquals(expected,recipeName);</b>
+&nbsp;		
+&nbsp;	}
+&nbsp;	@Test
+&nbsp;	public void testDeletRecipe2()
+&nbsp;	   
+&nbsp;	{   // We add a recipe that will be stored in index 0 in the array of recipes
+<b class="fc">&nbsp;		recipeBook.addRecipe(newRecipe);</b>
+&nbsp;		// We delete the added recipe by specifying its index
+<b class="fc">&nbsp;		String recipeName =recipeBook.deleteRecipe(0);</b>
+&nbsp;		// Since the name of the recipe that was deleted is &quot;R1&quot; we expect to get R1
+<b class="fc">&nbsp;		String expected = &quot;R1&quot;;</b>
+<b class="fc">&nbsp;		assertEquals(expected,recipeName);</b>
+&nbsp;		
+&nbsp;	}
+&nbsp;	@Test
+&nbsp;	public void testGetRecipes()
+&nbsp;
+&nbsp;	{   // No recipes have been added to the recipe book 
+&nbsp;		// so we expect to get an empty array
+<b class="fc">&nbsp;		Recipe expected []= {};</b>
+<b class="fc">&nbsp;		Recipe recipes [] = recipeBook.getRecipes();</b>
+<b class="fc">&nbsp;		assertArrayEquals(expected, recipes);</b>
+&nbsp;		
+&nbsp;	}
+&nbsp;	
+&nbsp;	
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-25 11:33</div>
+</div>
+</body>
+</html>

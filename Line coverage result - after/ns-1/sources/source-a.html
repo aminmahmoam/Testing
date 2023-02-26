@@ -1,0 +1,318 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > RecipeTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">edu.ncsu.csc326.coffeemaker</a>
+</div>
+
+<h1>Coverage Summary for Class: RecipeTest (edu.ncsu.csc326.coffeemaker)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RecipeTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (28/28)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92%
+  </span>
+  <span class="absValue">
+    (81/88)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package edu.ncsu.csc326.coffeemaker;
+&nbsp;import static org.junit.Assert.assertEquals;
+&nbsp;import static org.junit.Assert.assertNotNull;
+&nbsp;import static org.junit.Assert.assertNull;
+&nbsp;import static org.junit.Assert.assertThrows;
+&nbsp;
+&nbsp;import edu.ncsu.csc326.coffeemaker.exceptions.InventoryException;
+&nbsp;import org.junit.Before;
+&nbsp;import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
+&nbsp;import org.junit.Test;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;public class RecipeTest {</b>
+&nbsp;	Recipe recipe;
+&nbsp;	
+&nbsp;   
+&nbsp;    @Before
+&nbsp;    public void setUp() 
+<b class="fc">&nbsp;    {   recipe = new Recipe();</b>
+&nbsp;    	
+&nbsp;    }
+&nbsp;    
+&nbsp;   
+&nbsp;    @Test
+&nbsp;	public void testSetAmtCoffeeException() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				RecipeException.class, () -&gt; {
+<b class="fc">&nbsp;					String s = &quot;-14&quot;;</b>
+<b class="fc">&nbsp;					recipe.setAmtCoffee(s); // Should throw a RecipeExceptionException</b>
+&nbsp;				}
+&nbsp;				);
+<b class="fc">&nbsp;		assertEquals(&quot;Units of coffee must be a positive integer&quot;, exception.getMessage());</b>
+&nbsp;	}
+&nbsp;   
+&nbsp;    @Test
+&nbsp;	public void testSetAmtMilkException() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				RecipeException.class, () -&gt; {
+<b class="fc">&nbsp;					recipe.setAmtMilk(&quot;-2&quot;); // Should throw a RecipeExceptionException</b>
+&nbsp;				}
+&nbsp;				);
+<b class="fc">&nbsp;		assertEquals(&quot;Units of milk must be a positive integer&quot;, exception.getMessage());</b>
+&nbsp;	}
+&nbsp;    
+&nbsp;    // This one should fail because the setName method is not checking this and the exception is not thrown.
+&nbsp;    @Test
+&nbsp;    public void testInputNameValidity() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				IllegalArgumentException.class, () -&gt; {
+<b class="fc">&nbsp;					recipe.setName(&quot;))&amp;&amp;&quot;); </b>
+&nbsp;				}
+&nbsp;				);
+&nbsp;    }
+&nbsp;    
+&nbsp;    //???
+&nbsp;    // This one tests if the name is null and  because the setName method does not handle a null input name.
+&nbsp;    // We expect an exception to be thrown but no exception is thrown.
+&nbsp;   
+&nbsp;    @Test
+&nbsp;    public void testAsserNametNotNull() {
+<b class="fc">&nbsp;    	String n= null;</b>
+<b class="fc">&nbsp;		recipe.setName(n); </b>
+<b class="fc">&nbsp;    assertNotNull(null, recipe.getName());</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    // This test should fail because invalid price inputs are not checked in the setPrice method
+&nbsp;    @Test
+&nbsp;    public void testInvalidPriceInput() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				IllegalArgumentException.class, () -&gt; {
+<b class="fc">&nbsp;					String price = &quot;///&quot;;</b>
+<b class="fc">&nbsp;					recipe.setPrice(price); </b>
+&nbsp;				}
+&nbsp;				);
+&nbsp;    }
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testInvalidPriceInput1() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				RecipeException.class, () -&gt; {
+<b class="fc">&nbsp;					String price = &quot;abc&quot;;</b>
+<b class="fc">&nbsp;					recipe.setPrice(price);</b>
+&nbsp;				}
+&nbsp;		);
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testInvalidPriceInput2() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				RecipeException.class, () -&gt; {
+<b class="fc">&nbsp;					String price = &quot;-12&quot;;</b>
+<b class="fc">&nbsp;					recipe.setPrice(price);</b>
+&nbsp;				}
+&nbsp;		);
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testInvalidPriceInput3() throws RecipeException{
+&nbsp;		try{
+<b class="fc">&nbsp;			recipe.setPrice(&quot;12&quot;);</b>
+<b class="nc">&nbsp;		} catch (RecipeException e){</b>
+<b class="nc">&nbsp;			e.getMessage();</b>
+<b class="fc">&nbsp;		}</b>
+<b class="fc">&nbsp;		int expected = 12;</b>
+<b class="fc">&nbsp;		assertEquals(expected, recipe.getPrice());</b>
+&nbsp;	}
+&nbsp;
+&nbsp;    @Test
+&nbsp;	public void testSetPriceException() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				RecipeException.class, () -&gt; {
+<b class="fc">&nbsp;					recipe.setPrice(&quot;-23&quot;); // Should throw a RecipeExceptionException</b>
+&nbsp;				}
+&nbsp;				);
+<b class="fc">&nbsp;		assertEquals(&quot;Price must be a positive integer&quot;, exception.getMessage());</b>
+&nbsp;	}
+&nbsp;    
+&nbsp;    @Test
+&nbsp;	public void testSetAmtChocolateException() {
+<b class="fc">&nbsp;		Throwable exception = assertThrows(</b>
+&nbsp;				RecipeException.class, () -&gt; {
+<b class="fc">&nbsp;					recipe.setAmtChocolate(&quot;-356&quot;); // Should throw a RecipeExceptionException</b>
+&nbsp;				}
+&nbsp;				);
+<b class="fc">&nbsp;		assertEquals(&quot;Units of chocolate must be a positive integer&quot;, exception.getMessage());</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testFDataChocolateSet() {
+<b class="fc">&nbsp;		String result = &quot;&quot;;</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			recipe.setAmtChocolate(&quot;abc&quot;);</b>
+<b class="fc">&nbsp;		} catch (RecipeException e) {</b>
+<b class="fc">&nbsp;			result = e.getMessage();</b>
+<b class="nc">&nbsp;		}</b>
+<b class="fc">&nbsp;		assertEquals(&quot;Units of chocolate must be a positive integer&quot;, result);</b>
+&nbsp;	}
+&nbsp;	@Test
+&nbsp;	public void testFDataCoffeeSet() {
+<b class="fc">&nbsp;		String result = &quot;&quot;;</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			recipe.setAmtCoffee(&quot;abc&quot;);</b>
+<b class="fc">&nbsp;		} catch (RecipeException e) {</b>
+<b class="fc">&nbsp;			result = e.getMessage();</b>
+<b class="nc">&nbsp;		}</b>
+<b class="fc">&nbsp;		assertEquals(&quot;Units of coffee must be a positive integer&quot;, result);</b>
+&nbsp;	}
+&nbsp;	@Test
+&nbsp;	public void testFDataMilkSet() {
+<b class="fc">&nbsp;		String result = &quot;&quot;;</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			recipe.setAmtMilk(&quot;abc&quot;);</b>
+<b class="fc">&nbsp;		} catch (RecipeException e) {</b>
+<b class="fc">&nbsp;			result = e.getMessage();</b>
+<b class="nc">&nbsp;		}</b>
+<b class="fc">&nbsp;		assertEquals(&quot;Units of milk must be a positive integer&quot;, result);</b>
+&nbsp;	}
+&nbsp;	@Test
+&nbsp;	public void testFDataSugarSet() {
+<b class="fc">&nbsp;		String result = &quot;&quot;;</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			recipe.setAmtSugar(&quot;abc&quot;);</b>
+<b class="fc">&nbsp;		} catch (RecipeException e) {</b>
+<b class="fc">&nbsp;			result = e.getMessage();</b>
+<b class="nc">&nbsp;		}</b>
+<b class="fc">&nbsp;		assertEquals(&quot;Units of sugar must be a positive integer&quot;, result);</b>
+&nbsp;	}
+&nbsp;	@Test
+&nbsp;	public void testNDataSugarSet() {
+<b class="fc">&nbsp;		String result = &quot;&quot;;</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			recipe.setAmtSugar(&quot;-12&quot;);</b>
+<b class="fc">&nbsp;		} catch (RecipeException e) {</b>
+<b class="fc">&nbsp;			result = e.getMessage();</b>
+<b class="nc">&nbsp;		}</b>
+<b class="fc">&nbsp;		assertEquals(&quot;Units of sugar must be a positive integer&quot;, result);</b>
+&nbsp;	}
+&nbsp;	@Test
+&nbsp;	public void testToString() {
+<b class="fc">&nbsp;		recipe.setName(&quot;hello&quot;);</b>
+<b class="fc">&nbsp;		String result = recipe.toString();</b>
+<b class="fc">&nbsp;		String expected = &quot;hello&quot;;</b>
+<b class="fc">&nbsp;		assertEquals(result, expected);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testHash() {
+<b class="fc">&nbsp;		recipe.setName(null);</b>
+<b class="fc">&nbsp;		int result = recipe.hashCode();</b>
+<b class="fc">&nbsp;		int expected = 31;</b>
+<b class="fc">&nbsp;		assertEquals(result, expected);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testEquals() {
+<b class="fc">&nbsp;		recipe.setName(null);</b>
+<b class="fc">&nbsp;		Recipe newRecipe = new Recipe();</b>
+<b class="fc">&nbsp;		newRecipe.setName(&quot;abc&quot;);</b>
+<b class="fc">&nbsp;		Boolean result = recipe.equals(newRecipe);</b>
+<b class="fc">&nbsp;		assertEquals(result, false);</b>
+&nbsp;
+<b class="fc">&nbsp;		newRecipe.setName(null);</b>
+<b class="fc">&nbsp;		result = recipe.equals(newRecipe);</b>
+<b class="fc">&nbsp;		assertEquals(result, false);</b>
+&nbsp;
+<b class="fc">&nbsp;		String test = &quot;abc&quot;;</b>
+<b class="fc">&nbsp;		result = recipe.equals(test);</b>
+<b class="fc">&nbsp;		assertEquals(result, false);</b>
+&nbsp;
+<b class="fc">&nbsp;		recipe.setName(&quot;abc&quot;);</b>
+<b class="fc">&nbsp;		newRecipe.setName(&quot;abc&quot;);</b>
+<b class="fc">&nbsp;		result = recipe.equals(newRecipe);</b>
+<b class="fc">&nbsp;		assertEquals(result, true);</b>
+&nbsp;	}
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-25 11:33</div>
+</div>
+</body>
+</html>

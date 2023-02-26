@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecipeTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">book Coverage Results</a> &gt; <a href="index.source.html" class="el_package">edu.ncsu.csc326.coffeemaker</a> &gt; <span class="el_source">RecipeTest.java</span></div><h1>RecipeTest.java</h1><pre class="source lang-java linenums">package edu.ncsu.csc326.coffeemaker;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import org.junit.Before;
+import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
+import org.junit.Test;
+
+
+<span class="nc" id="L11">public class RecipeTest {</span>
+	Recipe recipe;
+	
+   
+    @Before
+    public void setUp() 
+<span class="nc" id="L17">    {   recipe = new Recipe();</span>
+    	
+<span class="nc" id="L19">    }</span>
+    
+   
+    @Test
+	public void testSetAmtCoffeeException() {
+<span class="nc" id="L24">		Throwable exception = assertThrows(</span>
+				RecipeException.class, () -&gt; {
+<span class="nc" id="L26">					String s = &quot;-14&quot;;</span>
+<span class="nc" id="L27">					recipe.setAmtCoffee(s); // Should throw a RecipeExceptionException</span>
+<span class="nc" id="L28">				}</span>
+				);
+<span class="nc" id="L30">		assertEquals(&quot;Units of coffee must be a positive integer&quot;, exception.getMessage());</span>
+<span class="nc" id="L31">	}</span>
+   
+    @Test
+	public void testSetAmtMilkException() {
+<span class="nc" id="L35">		Throwable exception = assertThrows(</span>
+				RecipeException.class, () -&gt; {
+<span class="nc" id="L37">					recipe.setAmtMilk(&quot;-2&quot;); // Should throw a RecipeExceptionException</span>
+<span class="nc" id="L38">				}</span>
+				);
+<span class="nc" id="L40">		assertEquals(&quot;Units of milk must be a positive integer&quot;, exception.getMessage());</span>
+<span class="nc" id="L41">	}</span>
+    
+    // This one should fail because the setName method is not checking this and the exception is not thrown.
+    @Test
+    public void testInputNameValidity() {
+<span class="nc" id="L46">		Throwable exception = assertThrows(</span>
+				IllegalArgumentException.class, () -&gt; {
+<span class="nc" id="L48">					recipe.setName(&quot;))&amp;&amp;&quot;); </span>
+<span class="nc" id="L49">				}</span>
+				);
+<span class="nc" id="L51">    }</span>
+    
+    //???
+    // This one tests if the name is null and  because the setName method does not handle a null input name.
+    // We expect an exception to be thrown but no exception is thrown.
+   
+    @Test
+    public void testAsserNametNotNull() {
+<span class="nc" id="L59">    	String n= null;</span>
+<span class="nc" id="L60">		recipe.setName(n); </span>
+<span class="nc" id="L61">    assertNotNull(null, recipe.getName());</span>
+<span class="nc" id="L62">    }</span>
+    
+    // This test should fail because invalid price inputs are not checked in the setPrice method
+    @Test
+    public void testInvalidPriceInput() {
+<span class="nc" id="L67">		Throwable exception = assertThrows(</span>
+				IllegalArgumentException.class, () -&gt; {
+<span class="nc" id="L69">					String price = &quot;///&quot;;</span>
+<span class="nc" id="L70">					recipe.setPrice(price); </span>
+<span class="nc" id="L71">				}</span>
+				);
+<span class="nc" id="L73">    }</span>
+
+	@Test
+	public void testInvalidPriceInput1() {
+<span class="nc" id="L77">		Throwable exception = assertThrows(</span>
+				RecipeException.class, () -&gt; {
+<span class="nc" id="L79">					String price = &quot;abc&quot;;</span>
+<span class="nc" id="L80">					recipe.setPrice(price);</span>
+<span class="nc" id="L81">				}</span>
+		);
+<span class="nc" id="L83">	}</span>
+
+	@Test
+	public void testInvalidPriceInput2() {
+<span class="nc" id="L87">		Throwable exception = assertThrows(</span>
+				RecipeException.class, () -&gt; {
+<span class="nc" id="L89">					String price = &quot;-12&quot;;</span>
+<span class="nc" id="L90">					recipe.setPrice(price);</span>
+<span class="nc" id="L91">				}</span>
+		);
+<span class="nc" id="L93">	}</span>
+
+	@Test
+	public void testInvalidPriceInput3() throws RecipeException{
+		try{
+<span class="nc" id="L98">			recipe.setPrice(&quot;12&quot;);</span>
+<span class="nc" id="L99">		} catch (RecipeException e){</span>
+<span class="nc" id="L100">			e.getMessage();</span>
+<span class="nc" id="L101">		}</span>
+<span class="nc" id="L102">		int expected = 12;</span>
+<span class="nc" id="L103">		assertEquals(expected, recipe.getPrice());</span>
+<span class="nc" id="L104">	}</span>
+
+    @Test
+	public void testSetPriceException() {
+<span class="nc" id="L108">		Throwable exception = assertThrows(</span>
+				RecipeException.class, () -&gt; {
+<span class="nc" id="L110">					recipe.setPrice(&quot;-23&quot;); // Should throw a RecipeExceptionException</span>
+<span class="nc" id="L111">				}</span>
+				);
+<span class="nc" id="L113">		assertEquals(&quot;Price must be a positive integer&quot;, exception.getMessage());</span>
+<span class="nc" id="L114">	}</span>
+    
+    @Test
+	public void testSetAmtChocolateException() {
+<span class="nc" id="L118">		Throwable exception = assertThrows(</span>
+				RecipeException.class, () -&gt; {
+<span class="nc" id="L120">					recipe.setAmtChocolate(&quot;-356&quot;); // Should throw a RecipeExceptionException</span>
+<span class="nc" id="L121">				}</span>
+				);
+<span class="nc" id="L123">		assertEquals(&quot;Units of chocolate must be a positive integer&quot;, exception.getMessage());</span>
+<span class="nc" id="L124">	}</span>
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExampleTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">book Coverage Results</a> &gt; <a href="index.source.html" class="el_package">edu.ncsu.csc326.coffeemaker</a> &gt; <span class="el_source">ExampleTest.java</span></div><h1>ExampleTest.java</h1><pre class="source lang-java linenums">package edu.ncsu.csc326.coffeemaker;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.fail;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import edu.ncsu.csc326.coffeemaker.exceptions.InventoryException;
+
+/**
+ *
+ * Example Unit tests for CoffeeMaker class.
+ * Do not submit as your own!
+ */
+<span class="nc" id="L17">public class ExampleTest {</span>
+	
+	private CoffeeMaker cm;
+	private Recipe r1;
+	private Recipe r2;
+	private Recipe r3;
+	private Recipe r4;
+
+	@Before
+	public void setUp() throws Exception {
+<span class="nc" id="L27">		cm = new CoffeeMaker();</span>
+		
+		//Set up for r1
+<span class="nc" id="L30">		r1 = new Recipe();</span>
+<span class="nc" id="L31">		r1.setName(&quot;Coffee&quot;);</span>
+<span class="nc" id="L32">		r1.setAmtChocolate(&quot;0&quot;);</span>
+<span class="nc" id="L33">		r1.setAmtCoffee(&quot;3&quot;);</span>
+<span class="nc" id="L34">		r1.setAmtMilk(&quot;1&quot;);</span>
+<span class="nc" id="L35">		r1.setAmtSugar(&quot;1&quot;);</span>
+<span class="nc" id="L36">		r1.setPrice(&quot;50&quot;);</span>
+		
+		//Set up for r2
+<span class="nc" id="L39">		r2 = new Recipe();</span>
+<span class="nc" id="L40">		r2.setName(&quot;Mocha&quot;);</span>
+<span class="nc" id="L41">		r2.setAmtChocolate(&quot;20&quot;);</span>
+<span class="nc" id="L42">		r2.setAmtCoffee(&quot;3&quot;);</span>
+<span class="nc" id="L43">		r2.setAmtMilk(&quot;1&quot;);</span>
+<span class="nc" id="L44">		r2.setAmtSugar(&quot;1&quot;);</span>
+<span class="nc" id="L45">		r2.setPrice(&quot;75&quot;);</span>
+		
+		//Set up for r3
+<span class="nc" id="L48">		r3 = new Recipe();</span>
+<span class="nc" id="L49">		r3.setName(&quot;Latte&quot;);</span>
+<span class="nc" id="L50">		r3.setAmtChocolate(&quot;0&quot;);</span>
+<span class="nc" id="L51">		r3.setAmtCoffee(&quot;3&quot;);</span>
+<span class="nc" id="L52">		r3.setAmtMilk(&quot;3&quot;);</span>
+<span class="nc" id="L53">		r3.setAmtSugar(&quot;1&quot;);</span>
+<span class="nc" id="L54">		r3.setPrice(&quot;100&quot;);</span>
+		
+		//Set up for r4
+<span class="nc" id="L57">		r4 = new Recipe();</span>
+<span class="nc" id="L58">		r4.setName(&quot;Hot Chocolate&quot;);</span>
+<span class="nc" id="L59">		r4.setAmtChocolate(&quot;4&quot;);</span>
+<span class="nc" id="L60">		r4.setAmtCoffee(&quot;0&quot;);</span>
+<span class="nc" id="L61">		r4.setAmtMilk(&quot;1&quot;);</span>
+<span class="nc" id="L62">		r4.setAmtSugar(&quot;1&quot;);</span>
+<span class="nc" id="L63">		r4.setPrice(&quot;65&quot;);</span>
+<span class="nc" id="L64">	}</span>
+	
+	@Test
+	public void testAddInventory_Normal() {
+		try {
+<span class="nc" id="L69">			cm.addInventory(&quot;4&quot;,&quot;7&quot;,&quot;0&quot;,&quot;9&quot;); //Coffee, Milk, Sugar, Chocolate</span>
+<span class="nc" id="L70">		} catch (InventoryException e) {</span>
+<span class="nc" id="L71">			fail(&quot;InventoryException should not be thrown&quot;);</span>
+<span class="nc" id="L72">		}</span>
+<span class="nc" id="L73">		String inventory = cm.checkInventory();</span>
+<span class="nc" id="L74">		String expected = &quot;Coffee: 19\nMilk: 22\nSugar: 15\nChocolate: 24\n&quot;;</span>
+		// We start with 15 in inventory, then added some.
+<span class="nc" id="L76">		assertEquals(expected,inventory);</span>
+<span class="nc" id="L77">	}</span>
+	
+	@Test
+	public void testAddInventoryException() {
+<span class="nc" id="L81">		Throwable exception = assertThrows(</span>
+				InventoryException.class, () -&gt; {
+<span class="nc" id="L83">					cm.addInventory(&quot;4&quot;, &quot;-1&quot;, &quot;asdf&quot;, &quot;3&quot;); // Should throw an InventoryException</span>
+<span class="nc" id="L84">				}</span>
+				);
+<span class="nc" id="L86">	}</span>
+	
+	@Test
+	public void testMakeCoffee_Normal() {
+<span class="nc" id="L90">		cm.addRecipe(r1);</span>
+<span class="nc" id="L91">		assertEquals(25, cm.makeCoffee(0, 75));</span>
+<span class="nc" id="L92">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
